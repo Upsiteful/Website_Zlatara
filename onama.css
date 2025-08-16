@@ -1,0 +1,226 @@
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html, body {
+  margin: 0;
+  padding: 0;
+ 
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #f2e6d8; 
+  padding: 15px 40px;
+  color: #d4af37; /* zlatna */
+  border-bottom: white 2px solid; /* tamnija braon nijansa */
+}
+
+.topbar .logo {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.topbar .logo img {
+  height: 100px; /* prilagodi po potrebi */
+}
+.navbar ul {
+  display: flex;
+  list-style: none;
+  gap: 30px;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar a {
+  text-decoration: none;
+  color:  #3b2f2f; /* tamnija braon nijansa */
+  font-weight: 500;
+  font-size: 14px;
+  transition: color 0.2s ease;
+
+}
+
+.navbar a:hover {
+  color: #ffffff;
+}
+
+
+
+.about-section {
+  max-width: 1200px;
+  margin: 100px auto;
+  padding: 0 20px;
+  font-family: 'Playfair Display', serif;
+  color: #3b2f2f;
+}
+
+.about-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 50px;
+  margin-bottom: 100px;
+}
+
+.about-row.reverse {
+  flex-direction: row-reverse;
+}
+
+.about-text {
+  flex: 1;
+}
+
+.about-text h2 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  color: #d4af37;
+}
+
+.about-text p {
+  font-size: 1.5vw;
+  line-height: 1.8;
+  color: #444;
+  max-width: 600px;
+}
+
+.about-img {
+  flex: 1;
+}
+
+.about-img img {
+  width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .about-row, .about-row.reverse {
+    flex-direction: column;
+  }
+
+  .about-text, .about-img {
+    text-align: center;
+  }
+}
+
+body{
+    background-color:#f2e6d8;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+.location-section {
+  /*background-color: #fffefc;*/
+  background-color: transparent;
+  padding: 80px 40px;
+  font-family: 'Playfair Display', serif;
+  color: #3b2f2f;
+}
+
+.location-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 0 auto;
+  gap: 40px;
+}
+
+.location-info {
+  flex: 1 1 350px;
+}
+
+.location-info h2 {
+  font-size: 2.4rem;
+  color: #1e1e1e;
+  margin-bottom: 10px;
+}
+
+.location-info h3 {
+  font-size: 1.6rem;
+  color: #b19777;
+  margin-bottom: 20px;
+}
+
+.location-info ul {
+  list-style: none;
+  padding: 0;
+  font-size: 1.1rem;
+  color: #555;
+}
+
+.location-info ul li {
+  margin-bottom: 10px;
+}
+
+.location-info i {
+  margin-right: 10px;
+  color: #b19777;
+}
+
+.map-container {
+  flex: 1 1 500px;
+  min-height: 300px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+ /* --- Stil za zastavice --- */
+    .language-switcher {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      display: flex;
+      gap: 10px;
+      background: white;
+      padding: 6px 10px;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      z-index: 10;
+    }
+    .language-switcher img {
+      width: 24px;
+      height: 16px;
+      cursor: pointer;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      z-index: 11;
+    }
+
+    /* --- Sklanja Google bar i ikonice --- */
+    .goog-te-banner-frame.skiptranslate,
+    .goog-te-banner-frame,
+    .goog-te-gadget-icon {
+      display: none !important;
+    }
+    body {
+      top: 0px !important;
+    }
+    html body > .skiptranslate,
+.goog-te-banner-frame.skiptranslate,
+.goog-te-banner-frame {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+}
+html {
+    top: 0 !important;
+}

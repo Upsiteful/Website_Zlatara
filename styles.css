@@ -1,0 +1,502 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html, body {
+  margin: 0;
+  padding: 0;
+ 
+}
+body{
+    background-color:#f2e6d8;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #f2e6d8; 
+  padding: 15px 40px;
+  color: #d4af37; /* zlatna */
+}
+
+.topbar .logo {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.topbar .logo img {
+  height: 100px; /* prilagodi po potrebi */
+}
+
+.brand-name {
+  font-size: 16px;
+  line-height: 1.2;
+  color:  #3b2f2f;;
+}
+
+.brand-name strong {
+  font-size: 20px;
+  letter-spacing: 1px;
+  color: #3b2f2f; /* tamnija braon nijansa */
+}
+
+.brand-name .subtext {
+  font-size: 14px;
+  font-weight: 300;
+  color: #bfae84; /* svetlija zlatna */
+}
+
+.navbar ul {
+  display: flex;
+  list-style: none;
+  gap: 30px;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar a {
+  text-decoration: none;
+  color:  #3b2f2f; /* tamnija braon nijansa */
+  font-weight: 500;
+  font-size: 14px;
+  transition: color 0.2s ease;
+
+}
+
+.navbar a:hover {
+  color: #ffffff;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+    
+}
+
+.hero {
+    opacity: 0;
+  position: relative;
+  width: 100%;
+  height: 90vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 5s ease 0.7s forwards; /* animacija za fade-in efekat */
+}
+
+.hero-bg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  filter: brightness(0.7); /* da pozadina bude malo tamnija */
+}
+
+.hero-content {
+  text-align: center;
+  color: #c89b62; /* zlatna boja */
+  font-family: 'Playfair Display', serif;
+}
+
+.hero-content h1 {
+  color: #3b2f2f; /* tamnija braon nijansa */
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  font-family: "Cinzel", serif;
+  font-optical-sizing: auto;
+
+  font-style: normal;
+}
+
+
+.cta-btn {
+  background-color: #e63924;
+  color: white;
+  padding: 0.8rem 2rem;
+  border: none;
+  border-radius: 2%;
+  font-size: 30px;
+  text-decoration: none;
+  transition: background 0.3s ease;
+  padding: 40 60px;
+}
+
+.cta-btn:hover {
+  background-color: #c92e1d;
+}
+
+.categories {
+  text-align: center;
+  padding: 2rem;
+  background: transparent;
+  font-family: 'Playfair Display', serif; /* elegantan font */
+  color: #3b2f2f;
+}
+
+@keyframes slideIn1 {
+  
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+    
+}
+@keyframes slideIn2 {
+  
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+    
+}
+.categories h2 {
+    transform: translateX(-500px);
+    opacity: 0;
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  letter-spacing: 1px;
+  color: #3b2f2f;
+  /*animation: slideIn1 3s ease forwards; /* animacija za ulazak teksta */
+}
+
+.categories .divider {
+  width: 100px;
+  border: none;
+  border-top: 2px solid #c89b62;
+  margin: 0.5rem auto 1rem;
+}
+
+.categories p {
+    transform: translateX(500px);
+    opacity: 0;
+  color: #3b2f2f;
+  font-style: italic;
+  max-width: 600px;
+  margin: 0 auto 1rem;
+ /* animation: slideIn2 3s ease forwards;*/
+  font-size: 20px;
+}
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 50px;
+  padding: 1rem 0;
+}
+
+.category-item {
+  background: #fafafa;
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.08);
+  transition: transform 0.3s ease;
+  height: 450px;
+}
+
+.category-item:hover {
+  transform: translateY(-5px);
+}
+
+.category-item img {
+  width: 100%;
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+  object-fit: cover;
+  height: 300px;
+}
+
+.category-item h3 {
+  font-size: 2vw;
+  margin: 0.5rem 0;
+  color: #3b2f2f;
+}
+
+.category-item a {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 10px 20px;
+  font-size: 0.95rem;
+  font-weight: bold;
+  text-decoration: none;
+  color: #fff;
+  background-color: #b19777; /* zlatna nijansa */
+  border: none;
+  border-radius: 6px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+.category-item a:hover {
+ background-color: #a18564;
+  transform: translateY(-2px);
+}
+
+
+
+
+
+
+
+
+
+
+
+.new-products {
+  text-align: center;
+  padding: 4rem 2rem;
+  background-color: white;
+  font-family: 'Playfair Display', serif;
+}
+
+.new-products h2 {
+  color: #3b2f2f;
+  font-size: 2.5rem;
+}
+
+.new-products p {
+  color: #777;
+  margin-bottom: 2rem;
+}
+
+.product-slider {
+  overflow: hidden;
+  max-width: 90%;
+  margin: 0 auto;
+  position: relative;
+}
+
+.product-track {
+  display: flex;
+  transition: transform 1s ease-in-out;
+
+  width: calc(100% * 2); /* 2 stranice */
+}
+
+.product-card {
+  width: 23%;
+  margin: 1%;
+  box-sizing: border-box;
+}
+
+
+.product-card img {
+  width: 100%;
+  height: auto;
+  border-radius: 6px;
+}
+
+.product-card h3 {
+  font-size: 1rem;
+  margin-top: 0.5rem;
+}
+
+.product-card .price {
+  color: #c89b62;
+  font-weight: bold;
+}
+
+.slider-dots {
+  margin-top: 1rem;
+}
+
+.slider-dots .dot {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  background-color: #999;
+  border-radius: 50%;
+  margin: 0 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.slider-dots .dot.active {
+  background-color: #c89b62;
+}
+
+
+
+
+
+.about-stats {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  background-color: #f7f1e8;
+  padding: 80px 40px;
+  font-family: 'Playfair Display', serif;
+  color: #3b2f2f;
+  gap: 3rem;
+
+  margin-bottom: 20vw;
+  margin-top: 20vw;
+}
+
+.about-text {
+  flex: 1 1 450px;
+  max-width: 600px;
+}
+
+.about-text h5 {
+  font-size: 1rem;
+  letter-spacing: 2px;
+  color: #b19777;
+  margin-bottom: 1rem;
+}
+
+.about-text h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+  color: #3b2f2f;
+  font-family: 'Cinzel', serif;
+}
+
+.about-text p {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: #5c4a3b;
+  margin-bottom: 2rem;
+}
+
+.btn-about {
+  background-color: #b19777;
+  color: white;
+  padding: 12px 28px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1rem;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+}
+
+.btn-about:hover {
+  background-color: #9a8264;
+}
+
+.about-stats-numbers {
+  flex: 1 1 400px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  justify-items: center;
+  align-items: center;
+}
+
+.stat-box {
+  text-align: center;
+}
+
+.stat-box img {
+  height: 50px;
+  margin-bottom: 10px;
+  opacity: 0.8;
+}
+
+.stat-value {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #c89b62;
+  margin-bottom: 0.5rem;
+}
+
+.stat-box p {
+  font-size: 1rem;
+  color: #5c4a3b;
+  font-weight: 500;
+}
+
+/* Responsivnost */
+@media (max-width: 900px) {
+  .about-stats {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .about-text,
+  .about-stats-numbers {
+    max-width: 100%;
+  }
+
+  .about-stats-numbers {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 500px) {
+  .about-stats-numbers {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+@media (max-width: 800px) {
+  .site-footer{
+    text-align: center;
+  }
+  .footer-about p { 
+    max-width: 90vw;
+  }
+  
+}
+
+
+ /* --- Stil za zastavice --- */
+    .language-switcher {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      display: flex;
+      gap: 10px;
+      background: white;
+      padding: 6px 10px;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      z-index: 10;
+    }
+    .language-switcher img {
+      width: 24px;
+      height: 16px;
+      cursor: pointer;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      z-index: 11;
+    }
+
+    /* --- Sklanja Google bar i ikonice --- */
+    .goog-te-banner-frame.skiptranslate,
+    .goog-te-banner-frame,
+    .goog-te-gadget-icon {
+      display: none !important;
+    }
+    body {
+      top: 0px !important;
+    }
+    html body > .skiptranslate,
+.goog-te-banner-frame.skiptranslate,
+.goog-te-banner-frame {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+}
+html {
+    top: 0 !important;
+}
