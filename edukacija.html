@@ -7,7 +7,7 @@
     <title>Edukacija</title>
 </head>
 <body>
-     <header class="topbar">
+      <header class="topbar">
   <div class="logo">
     <img src="Beige_Black_Classic_Elegant_Jewelry_Logo-removebg-preview.png" alt="Zlatara Logo">
   </div>
@@ -20,12 +20,19 @@
       <li><a href="proizvodi.html">KOLEKCIJA</a></li>
     </ul>
   </nav>
-  <div class="language-switcher">
-    <img src="https://flagcdn.com/w20/rs.png" onclick="translateLanguage('sr')" alt="Srpski">
-    <img src="https://flagcdn.com/w20/gb.png" onclick="translateLanguage('en')" alt="English">
-    <img src="https://flagcdn.com/w20/de.png" onclick="translateLanguage('de')" alt="Deutsch">
-    <img src="https://flagcdn.com/w20/fr.png" onclick="translateLanguage('fr')" alt="Français">
+
+  <!-- HAMBURGER (sklonićemo ga CSS-om na desktopu) -->
+  <div class="hamburger" aria-label="meni" title="meni">
+    <i class="fas fa-bars"></i>
   </div>
+
+  <div class="language-switcher">
+    <img src="zastava srbija.svg" onclick="translateLanguage('sr')" alt="Srpski">
+    <img src="zastava velike britanije.svg" onclick="translateLanguage('en')" alt="English">
+    <img src="zastava nemacka.webp" onclick="translateLanguage('de')" alt="Deutsch">
+    <img src="zastava francuske.png" onclick="translateLanguage('fr')" alt="Français">
+  </div>
+
 </header>
 
 
@@ -237,4 +244,5 @@ document.addEventListener('DOMContentLoaded', () => {
   <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
 </body>
+
 </html>
