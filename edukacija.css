@@ -413,3 +413,49 @@ body{
 html {
     top: 0 !important;
 }
+
+/* ===== MOBILE OPTIMIZATION ===== */
+@media (max-width: 768px) {
+  /* Sekcija sa prstenom i ogrlicom */
+  .size-guide-container {
+    flex-direction: column;
+    gap: 30px;
+  }
+  .size-item img {
+    width: 100%;
+    height: auto;
+    max-height: 400px;
+  }
+
+  /* Gemstone galerija – 1 po redu */
+  .gemstone-gallery {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  /* Zlato – stacked */
+  .gold-content {
+    flex-direction: column;
+    align-items: center;
+  }
+  .gold-image img {
+    max-height: 350px;
+  }
+
+  /* Srebro – stacked */
+  .metal-content {
+    flex-direction: column;
+    gap: 30px;
+  }
+  .metal-image img {
+    max-height: 350px;
+  }
+
+  /* General paddings manji */
+  .size-guide-section,
+  .gold-section,
+  .metal-section,
+  .gemstones-section {
+    padding: 30px 15px;
+  }
+}
