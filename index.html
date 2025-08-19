@@ -388,11 +388,12 @@
   });
 
   // Prvo animiraj <h2>
-  tl.to(".categories h2", {
+/* tl.to(".categories h2", {
     x: 0,
     opacity: 1,
     duration: 3,
-    ease: "sine.inOut"
+    ease: "sine.inOut",
+    clearProps: "transform"
   });
 
   // Zatim animiraj <p>
@@ -400,10 +401,25 @@
     x: 0,
     opacity: 1,
     duration: 3,
-    ease: "sine.inOut"
-  }, "-=2"); // "-=1" znači da p počinje 1s pre nego što h2 završi (blagi overlap)
-</script>
+    ease: "sine.inOut",
+    clearProps: "transform"
+  }, "-=2"); // "-=1" znači da p počinje 1s pre nego što h2 završi (blagi overlap)*/
+  tl.from(".categories h2", {
+  x: -100,
+  opacity: 0,
+  duration: 1,
+  ease: "sine.inOut"
+});
 
+tl.from(".categories p", {
+  x: -100,
+  opacity: 0,
+  duration: 1,
+  ease: "sine.inOut"
+}, "-=0.4");
+
+
+</script>
 
 
 
@@ -663,3 +679,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
 </body>
 </html>
+
