@@ -243,8 +243,41 @@ document.addEventListener('DOMContentLoaded', () => {
 
   </script>
   <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+<!-- MALI JS za hamburger i auto-zatvaranje pri resize-u -->
+<script>
+  (function(){
+    const hamburger = document.querySelector('.hamburger');
+    const navbar = document.querySelector('.navbar');
 
+    if (!hamburger || !navbar) return;
+
+    hamburger.addEventListener('click', () => {
+      navbar.classList.toggle('active');
+      // kada se otvori meni, pomeri language-switcher u meni (stilovi u CSS)
+      document.body.classList.toggle('menu-open');
+    });
+
+    // zatvori meni kad se klikne na link (mobilno)
+    navbar.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        if (navbar.classList.contains('active')) {
+          navbar.classList.remove('active');
+          document.body.classList.remove('menu-open');
+        }
+      });
+    });
+
+    // na resize > 768 ukloni active (vrati desktop ponašanje)
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 768) {
+        navbar.classList.remove('active');
+        document.body.classList.remove('menu-open');
+      }
+    });
+  })();
+</script>
 </body>
 
 </html>
+
 
