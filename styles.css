@@ -160,8 +160,8 @@ body{
     
 }
 .categories h2 {
-    transform: translateX(-500px);
-    opacity: 0;
+    /*transform: translateX(-500px);
+    opacity: 0;*/
   font-size: 2rem;
   margin-bottom: 0.5rem;
   letter-spacing: 1px;
@@ -177,8 +177,8 @@ body{
 }
 
 .categories p {
-    transform: translateX(500px);
-    opacity: 0;
+    /*transform: translateX(500px);
+    opacity: 0;*/
   color: #3b2f2f;
   font-style: italic;
   max-width: 600px;
@@ -963,7 +963,6 @@ html {
   outline: none;
   box-shadow: none;
 }
-
 @media (max-width: 768px) {
 footer {
     text-align: center;
@@ -992,3 +991,4 @@ footer {
     gap: 15px;
   }
 }
+
