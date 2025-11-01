@@ -98,7 +98,110 @@
         align-items: center;
       }
     }
+    .order-button {
+  padding: 12px 20px;
+  background: #d4af37;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  border-radius: 6px;
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+.order-button:hover {
+  background: #b8952d;
+}
+
+/* Modal stil */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.7);
+}
+
+.modal-content {
+  background: #fff;
+  padding: 25px;
+  margin: 10% auto;
+  width: 90%;
+  max-width: 500px;
+  border-radius: 10px;
+}
+
+.close {
+  float: right;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+form input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+.order-button, .submit-order, .zavrsno-dugme {
+  padding: 12px 20px;
+  background: #d4af37;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  border-radius: 6px;
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+.order-button:hover {
+  background: #b8952d;
+}
+
+/* Modal stil */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.7);
+}
+
+.modal-content {
+  background: #fff;
+  padding: 25px;
+  margin: 10% auto;
+  width: 90%;
+  max-width: 500px;
+  border-radius: 10px;
+}
+
+.close {
+  float: right;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+form input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+
   </style>
+ 
+
+
 </head>
 <body>
 
@@ -109,7 +212,54 @@
     <div class="product-container" id="product-details">
       <!-- JS učitava ovde -->
     </div>
-    <a href="proizvodi.html" class="back-link">← Nazad na kolekciju</a>
+    <!-- <a href="proizvodi.html" class="back-link">← Nazad na kolekciju</a> -->
+    <!-- Dugme za poručivanje -->
+
+
+<!-- Modal za naručivanje -->
+<!-- Dugme za poručivanje -->
+
+
+<!-- Modal za naručivanje -->
+<div id="orderModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2>Poručivanje proizvoda</h2>
+
+ <form id="form">
+  <div class="field">
+    <label for="product">product</label>
+    <input type="text" name="product" id="product" readonly>
+  </div>
+  <div class="field">
+    <label for="name">name</label>
+    <input type="text" name="name" id="name">
+  </div>
+  <div class="field">
+    <label for="phone">phone</label>
+    <input type="text" name="phone" id="phone">
+  </div>
+  <div class="field">
+    <label for="email">email</label>
+    <input type="text" name="email" id="email">
+  </div>
+  <div class="field">
+    <label for="address">address</label>
+    <input type="text" name="address" id="address">
+  </div>
+
+  <input type="submit" id="button" value="Poruči" class="zavrsno-dugme">
+</form>
+
+
+
+
+<p id="msg" style="color: green; display:none;">Porudžbina uspešno poslata! ✅</p>
+
+  </div>
+</div>
+
+
   </main>
 
   <footer>
@@ -118,8 +268,11 @@
     </p>
   </footer>
 
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <script>
-    // Lista proizvoda - koristiš iste slike i opise kao u kolekciji
+    emailjs.init("xDh7yX1H6scPpf4uk");
+console.log("JS fajl se učitao ✅");
+
    const proizvodi = [
   {
     id: 1,
@@ -284,33 +437,70 @@
   }
 ];
 
+    document.addEventListener("DOMContentLoaded", () => {
+        console.log("DOMContentLoaded event radi ✅");
+        console.log("Form element:", document.getElementById("form"));
 
-    // Uzmi ID iz URL-a
-    const params = new URLSearchParams(window.location.search);
-    const productId = parseInt(params.get("id"));
+      const params = new URLSearchParams(window.location.search);
+      const proizvod = proizvodi.find(p => p.id === parseInt(params.get("id")));
+      const container = document.getElementById("product-details");
 
-    const proizvod = proizvodi.find(p => p.id === productId);
+      if (proizvod) {
+        container.innerHTML = `
+          <div class="product-image"><img src="${proizvod.slika}" alt="${proizvod.naziv}"></div>
+          <div class="product-info">
+            <h1>${proizvod.naziv}</h1>
+            <p>${proizvod.opis}</p>
+            <div class="price">${proizvod.cena}</div>
+            <button id="orderBtn" class="order-button" >Poruči ovaj proizvod</button>
+          </div>`;
+      } else {
+        container.innerHTML = `<p style="text-align:center;">Proizvod nije pronađen.</p>`;
+      }
 
-    const container = document.getElementById("product-details");
+      // modal logika
+      const modal = document.getElementById("orderModal");
+      const btn = document.getElementById("orderBtn");
+      const close = document.querySelector(".close");
 
-    if (proizvod) {
-      container.innerHTML = `
-        <div class="product-image">
-          <img src="${proizvod.slika}" alt="${proizvod.naziv}">
-        </div>
-        <div class="product-info">
-          <h1>${proizvod.naziv}</h1>
-          <p>${proizvod.opis}</p>
-          <div class="price">${proizvod.cena}</div>
-          <a href="kontakt.html" class="btn">Kontaktirajte nas</a>
-        </div>
-      `;
-    } else {
-      container.innerHTML = `
-        <p style="text-align:center; font-size:1.2rem;">Proizvod nije pronađen.</p>
-      `;
-    }
+      btn.onclick = () => {
+        modal.style.display = "block";
+        document.getElementById("product").value = document.querySelector(".product-info h1").innerText;
+      };
+
+      close.onclick = () => modal.style.display = "none";
+      window.onclick = e => (e.target === modal) && (modal.style.display = "none");
+
+      // slanje forme
+      /*document.getElementById("form").addEventListener("submit", function(e) {*/
+    document.getElementById("button").addEventListener("click", e => {
+  e.preventDefault();
+  console.log("Klik radi ✅");
+
+  const form = document.getElementById("form");
+  const btn2 = document.getElementById("button");
+  btn2.value = "Šaljem...";
+
+  emailjs.sendForm("service_8qua0pz", "template_4cxdpb9", form)
+    .then(() => {
+      btn2.value = "Poslato!";
+      document.getElementById("msg").style.display = "block";
+      form.reset();
+      setTimeout(() => { 
+        document.getElementById("orderModal").style.display = "none"; 
+        btn2.value = "Pošalji narudžbinu"; 
+      }, 2000);
+    }, err => {
+      alert("Greška pri slanju: " + JSON.stringify(err));
+      btn2.value = "Pošalji narudžbinu";
+    });
+});
+
+
+    });
   </script>
 
 </body>
 </html>
+
+
