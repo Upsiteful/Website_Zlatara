@@ -594,7 +594,7 @@ html {
     border-radius: 12px;
     position: absolute;
     right: 12px;
-    top: 80px;
+    top: 10px;
     box-shadow: 0 8px 30px rgba(0,0,0,0.12);
     z-index: 50;
     min-width: 200px;
@@ -991,4 +991,5 @@ footer {
     gap: 15px;
   }
 }
+
 
