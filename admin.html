@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel | Zlatara</title>
+  <style>
+    body { font-family: "Poppins", sans-serif; padding: 20px; background: #f9f9f9; }
+    h1 { color: #b38b59; }
+    form { background: #fff; padding: 20px; border-radius: 10px; max-width: 500px; margin-top: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+    input, textarea, select { width: 100%; padding: 10px; margin-bottom: 12px; border: 1px solid #ccc; border-radius: 6px; }
+    button { padding: 12px 20px; background: #d4af37; color: #fff; border: none; cursor: pointer; border-radius: 6px; font-weight: bold; }
+    button:hover { background: #b8952d; }
+    #logout { margin-top: 20px; background: #ccc; color: #333; }
+    #filterDiv {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* dve kolone */
+  gap: 10px 20px; /* vertikalni i horizontalni razmak */
+  margin-bottom: 20px;
+}
+
+#filterDiv label {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* razmak između checkboxa i teksta */
+  padding: 5px;
+  background: #f1f1f1;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+#filterDiv label:hover {
+  background: #e0d4a0;
+}
+
+#filterDiv input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+}
+
+  </style>
+</head>
+<body>
+
+  <h1>Admin Panel</h1>
+
+  <!-- Login forma -->
+  <div id="loginDiv">
+    <h2>Prijava</h2>
+    <input type="email" id="email" placeholder="Email" />
+    <input type="password" id="password" placeholder="Lozinka" />
+    <button id="loginBtn">Prijavi se</button>
+    <p id="loginMsg" style="color:red;"></p>
+  </div>
+
+  <!-- Forma za dodavanje proizvoda -->
+  <div id="productDiv" style="display:none;">
+    <h2>Dodaj proizvod</h2>
+    <form id="productForm">
+      <input type="text" id="naziv" placeholder="Naziv proizvoda" required />
+      <textarea id="opis" placeholder="Opis proizvoda" required></textarea>
+      <input type="text" id="cena" placeholder="Cena (RSD)" required />
+
+      <!-- Upload slike -->
+      <label for="slika">Izaberite sliku:</label>
+      <input type="file" id="slika" accept="image/*" required />
+
+      <!-- Filteri -->
+      <h3>Izaberite filtere:</h3>
+<div id="filterDiv">
+  <label><input type="checkbox" value="prsten"> Prsten</label>
+  <label><input type="checkbox" value="ogrlica"> Ogrlica</label>
+  <label><input type="checkbox" value="narukvica"> Narukvica</label>
+  <label><input type="checkbox" value="sat"> Sat</label>
+  <label><input type="checkbox" value="zlatni"> Zlatni</label>
+  <label><input type="checkbox" value="srebrni"> Srebrni</label>
+  <label><input type="checkbox" value="platinski"> Platinski</label>
+  <label><input type="checkbox" value="dijamant"> Dijamant</label>
+</div>
+
+
+
+
+
+      <button type="submit">Dodaj proizvod</button>
+    </form>
+    <button id="logout">Odjavi se</button>
+    <p id="msg" style="color:green;"></p>
+  </div>
+
+  <!-- Firebase SDK -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
+    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
+    import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-storage.js";
+
+    // Firebase konfiguracija
+  const firebaseConfig = { apiKey: "AIzaSyDyAO-4f5lke0fpB8M5HQY9UEievyoz5w4", authDomain: "zlatara-bolesnikov.firebaseapp.com", projectId: "zlatara-bolesnikov", storageBucket: "zlatara-bolesnikov.firebasestorage.app", messagingSenderId: "444327293695", appId: "1:444327293695:web:1a83087a7ade3940ffd2ca", measurementId: "G-B03TZ5Z1GH" };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    const storage = getStorage(app);
+
+    // Login logika
+    const loginDiv = document.getElementById("loginDiv");
+    const productDiv = document.getElementById("productDiv");
+    const loginBtn = document.getElementById("loginBtn");
+    const loginMsg = document.getElementById("loginMsg");
+
+    loginBtn.addEventListener("click", async () => {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+        loginMsg.textContent = "";
+      } catch (err) {
+        loginMsg.textContent = "Greška pri prijavi: " + err.message;
+      }
+    });
+
+    // Provera login statusa
+    onAuthStateChanged(auth, user => {
+      if (user) {
+        loginDiv.style.display = "none";
+        productDiv.style.display = "block";
+      } else {
+        loginDiv.style.display = "block";
+        productDiv.style.display = "none";
+      }
+    });
+
+    // Dodavanje proizvoda
+    const filteri = Array.from(document.querySelectorAll("#filterDiv input[type='checkbox']:checked"))
+                     .map(checkbox => checkbox.value);
+
+    const msg = document.getElementById("msg");
+
+    productForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const naziv = document.getElementById("naziv").value;
+      const opis = document.getElementById("opis").value;
+      const cena = document.getElementById("cena").value;
+      const slikaFile = document.getElementById("slika").files[0];
+      /*const filteri = Array.from(document.getElementById("filterDiv").selectedOptions).map(opt => opt.value);*/
+
+      if (!slikaFile) return alert("Morate izabrati sliku!");
+
+      try {
+        // Upload slike u Storage
+        const storageRef = ref(storage, `proizvodi/${slikaFile.name}`);
+        await uploadBytes(storageRef, slikaFile);
+
+        // Dobij URL slike
+        const slikaURL = await getDownloadURL(storageRef);
+
+        // Dodaj proizvod u Firestore
+      await addDoc(collection(db, "products"), { naziv, opis, cena, slikaUrl, filteri });
+
+
+        msg.textContent = "Proizvod uspešno dodat ✅";
+        productForm.reset();
+      } catch (err) {
+        msg.textContent = "Greška: " + err.message;
+      }
+    });
+
+    // Logout
+    document.getElementById("logout").addEventListener("click", async () => {
+      await signOut(auth);
+    });
+  </script>
+
+</body>
+</html>
