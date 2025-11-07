@@ -802,8 +802,14 @@ html {
   </div>
 </footer>
 
-<script>
-  const products = [
+<!-- Firebase SDK -->
+<script type="module">
+
+
+  
+
+  
+  /*const products = [
     {id:1, title:"Prsten od zlata", category:"prstenje", material:"zlato", price:50000, desc:"Elegantni prsten sa dijamantom", img:"prsten od zlata.jpg"},
     {id:2, title:"Srebrna ogrlica", category:"ogrlice", material:"srebro", price:25000, desc:"Lepa srebrna ogrlica sa ukrasima", img:"srebrna ogrlica.webp"},
     {id:3, title:"Narukvica od platine", category:"narukvice", material:"platina", price:75000, desc:"Moderan dizajn narukvice", img:"narukvica od platine.jpg"},
@@ -829,9 +835,98 @@ html {
     {id:22, title:"Prsten od srebra sa granatom", category:"prstenje", material:"srebro", price:40000, desc:"Srebrni prsten sa crvenim granatom", img:"prsten srebro granat.avif"},
     {id:23, title:"Zlatna ogrlica sa smaragdom", category:"ogrlice", material:"zlato", price:95000, desc:"Zlatna ogrlica sa zelenim smaragdom", img:"zlatna ogrlica sa smaragdom.jpg"}
      
-];
+];*/
 
-  const productList = document.getElementById('productList');
+
+// inicijalizuj Firestore (pretpostavljam da je initializeApp već urađen negde iznad)
+/*const dba = getFirestore();
+
+let products = [];
+
+async function loadProducts() {
+  try {
+    const querySnapshot = await getDocs(collection(dba, "products"));
+    products = querySnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+    console.log("Proizvodi učitani:", products);
+  } catch (error) {
+    console.error("Greška pri učitavanju proizvoda:", error);
+  }
+}
+
+await loadProducts();
+*/
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+  import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyDyAO-4f5lke0fpB8M5HQY9UEievyoz5w4",
+    authDomain: "zlatara-bolesnikov.firebaseapp.com",
+    projectId: "zlatara-bolesnikov",
+    storageBucket: "zlatara-bolesnikov.firebasestorage.app",
+    messagingSenderId: "444327293695",
+    appId: "1:444327293695:web:1a83087a7ade3940ffd2ca",
+    measurementId: "G-B03TZ5Z1GH"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  const productList = document.getElementById("productList");
+  let products = [];
+
+  // 🔹 Učitaj proizvode iz Firestore
+  async function loadProducts() {
+    const querySnapshot = await getDocs(collection(db, "products"));
+    products = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    renderProducts(products);
+  }
+
+  // 🔹 Prikaz proizvoda
+  function renderProducts(list) {
+    productList.innerHTML = "";
+    list.forEach(prod => {
+      const item = document.createElement("div");
+      item.classList.add("product-item");
+      item.innerHTML = `
+        <img src="${prod.img}" alt="${prod.title}">
+        <h4>${prod.title}</h4>
+        <p>${prod.desc}</p>
+        <div class="price">${prod.price} RSD</div>
+      `;
+      item.addEventListener("click", () => openModal(prod));
+      productList.appendChild(item);
+    });
+  }
+
+  // 🔹 Modal za detalje proizvoda
+  const modal = document.getElementById("productModal");
+  const closeModalBtn = document.getElementById("closeModal");
+  const modalTitle = document.getElementById("modalTitle");
+  const modalImg = document.getElementById("modalImg");
+  const modalDesc = document.getElementById("modalDesc");
+  const modalPrice = document.getElementById("modalPrice");
+
+  function openModal(prod) {
+    modalTitle.textContent = prod.title;
+    modalImg.src = prod.img;
+    modalDesc.textContent = prod.desc;
+    modalPrice.textContent = prod.price + " RSD";
+    modal.style.display = "flex";
+  }
+
+  closeModalBtn.addEventListener("click", () => modal.style.display = "none");
+  window.addEventListener("click", e => {
+    if (e.target === modal) modal.style.display = "none";
+  });
+
+  loadProducts();
+
+
+
+  /*const productList = document.getElementById('productList');*/
   const priceRange = document.getElementById('priceRange');
   const priceValue = document.getElementById('priceValue');
 
@@ -868,21 +963,16 @@ html {
     displayProducts();
   });
 
-  const modal = document.getElementById('productModal');
-  const modalTitle = document.getElementById('modalTitle');
-  const modalImg = document.getElementById('modalImg');
-  const modalDesc = document.getElementById('modalDesc');
-  const modalPrice = document.getElementById('modalPrice');
-  const closeModalBtn = document.getElementById('closeModal');
 
-  function openModal(id){
+
+ /* function openModal(id){
     const p = products.find(pr=>pr.id===id);
     modalTitle.textContent = p.title;
     modalImg.src = p.img;
     modalDesc.textContent = p.desc;
     modalPrice.textContent = p.price.toLocaleString('sr-RS')+' RSD';
     modal.style.display = 'flex';
-  }
+  }*/
 
   closeModalBtn.addEventListener('click', ()=>{ modal.style.display='none'; });
   window.addEventListener('click', e=>{ if(e.target===modal) modal.style.display='none'; });
@@ -1144,6 +1234,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 </body>
 </html>
+
 
 
 
