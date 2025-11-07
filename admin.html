@@ -1,44 +1,44 @@
 <!DOCTYPE html>
 <html lang="sr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Admin Panel | Zlatara</title>
   <style>
     body { font-family: "Poppins", sans-serif; padding: 20px; background: #f9f9f9; }
     h1 { color: #b38b59; }
     form { background: #fff; padding: 20px; border-radius: 10px; max-width: 500px; margin-top: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-    input, textarea, select { width: 100%; padding: 10px; margin-bottom: 12px; border: 1px solid #ccc; border-radius: 6px; }
+    input, textarea { width: 100%; padding: 10px; margin-bottom: 12px; border: 1px solid #ccc; border-radius: 6px; }
     button { padding: 12px 20px; background: #d4af37; color: #fff; border: none; cursor: pointer; border-radius: 6px; font-weight: bold; }
     button:hover { background: #b8952d; }
     #logout { margin-top: 20px; background: #ccc; color: #333; }
+    
     #filterDiv {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr); /* dve kolone */
-  gap: 10px 20px; /* vertikalni i horizontalni razmak */
-  margin-bottom: 20px;
-}
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px 20px;
+      margin-bottom: 20px;
+    }
 
-#filterDiv label {
-  display: flex;
-  align-items: center;
-  gap: 8px; /* razmak između checkboxa i teksta */
-  padding: 5px;
-  background: #f1f1f1;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background 0.2s;
-}
+    #filterDiv label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px;
+      background: #f1f1f1;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
 
-#filterDiv label:hover {
-  background: #e0d4a0;
-}
+    #filterDiv label:hover {
+      background: #e0d4a0;
+    }
 
-#filterDiv input[type="checkbox"] {
-  width: 18px;
-  height: 18px;
-}
-
+    #filterDiv input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+    }
   </style>
 </head>
 <body>
@@ -68,41 +68,45 @@
 
       <!-- Filteri -->
       <h3>Izaberite filtere:</h3>
-<div id="filterDiv">
-  <label><input type="checkbox" value="prsten"> Prsten</label>
-  <label><input type="checkbox" value="ogrlica"> Ogrlica</label>
-  <label><input type="checkbox" value="narukvica"> Narukvica</label>
-  <label><input type="checkbox" value="sat"> Sat</label>
-  <label><input type="checkbox" value="zlatni"> Zlatni</label>
-  <label><input type="checkbox" value="srebrni"> Srebrni</label>
-  <label><input type="checkbox" value="platinski"> Platinski</label>
-  <label><input type="checkbox" value="dijamant"> Dijamant</label>
-</div>
-
-
-
-
+      <div id="filterDiv">
+        <label><input type="checkbox" value="prsten"> Prsten</label>
+        <label><input type="checkbox" value="ogrlica"> Ogrlica</label>
+        <label><input type="checkbox" value="narukvica"> Narukvica</label>
+        <label><input type="checkbox" value="sat"> Sat</label>
+        <label><input type="checkbox" value="zlatni"> Zlatni</label>
+        <label><input type="checkbox" value="srebrni"> Srebrni</label>
+        <label><input type="checkbox" value="platinski"> Platinski</label>
+        <label><input type="checkbox" value="dijamant"> Dijamant</label>
+      </div>
 
       <button type="submit">Dodaj proizvod</button>
     </form>
+
     <button id="logout">Odjavi se</button>
     <p id="msg" style="color:green;"></p>
   </div>
 
-  <!-- Firebase SDK -->
+  <!-- Firebase + Cloudinary -->
   <script type="module">
+    // Import Firebase SDK
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
     import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
     import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
-    import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-storage.js";
 
-    // Firebase konfiguracija
-  const firebaseConfig = { apiKey: "AIzaSyDyAO-4f5lke0fpB8M5HQY9UEievyoz5w4", authDomain: "zlatara-bolesnikov.firebaseapp.com", projectId: "zlatara-bolesnikov", storageBucket: "zlatara-bolesnikov.firebasestorage.app", messagingSenderId: "444327293695", appId: "1:444327293695:web:1a83087a7ade3940ffd2ca", measurementId: "G-B03TZ5Z1GH" };
+    // Firebase config
+    const firebaseConfig = {
+      apiKey: "AIzaSyDyAO-4f5lke0fpB8M5HQY9UEievyoz5w4",
+      authDomain: "zlatara-bolesnikov.firebaseapp.com",
+      projectId: "zlatara-bolesnikov",
+      storageBucket: "zlatara-bolesnikov.firebasestorage.app",
+      messagingSenderId: "444327293695",
+      appId: "1:444327293695:web:1a83087a7ade3940ffd2ca",
+      measurementId: "G-B03TZ5Z1GH"
+    };
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getFirestore(app);
-    const storage = getStorage(app);
 
     // Login logika
     const loginDiv = document.getElementById("loginDiv");
@@ -134,32 +138,46 @@
     });
 
     // Dodavanje proizvoda
-    const filteri = Array.from(document.querySelectorAll("#filterDiv input[type='checkbox']:checked"))
-                     .map(checkbox => checkbox.value);
-
+    const productForm = document.getElementById("productForm");
     const msg = document.getElementById("msg");
 
     productForm.addEventListener("submit", async (e) => {
       e.preventDefault();
 
-      const naziv = document.getElementById("naziv").value;
-      const opis = document.getElementById("opis").value;
-      const cena = document.getElementById("cena").value;
-      const slikaFile = document.getElementById("slika").files[0];
-      /*const filteri = Array.from(document.getElementById("filterDiv").selectedOptions).map(opt => opt.value);*/
+      const title = document.getElementById("naziv").value;
+      const desc = document.getElementById("opis").value;
+      const price = document.getElementById("cena").value;
+      const imgUrl = document.getElementById("slika").files[0];
+      const category = Array.from(document.querySelectorAll("#filterDiv input[type='checkbox']:checked"))
+                          .map(cb => cb.value);
 
-      if (!slikaFile) return alert("Morate izabrati sliku!");
+      if (!imgUrl) return alert("Morate izabrati sliku!");
 
       try {
-        // Upload slike u Storage
-        const storageRef = ref(storage, `proizvodi/${slikaFile.name}`);
-        await uploadBytes(storageRef, slikaFile);
+        // 🔹 Cloudinary upload
+        const formData = new FormData();
+        formData.append("file", imgUrl);
+        formData.append("upload_preset", "proizvodi"); // 👉 zameni sa tvojim presetom
+        formData.append("cloud_name", "dbbuf9yww");         // 👉 zameni sa tvojim cloud_name
 
-        // Dobij URL slike
-        const slikaURL = await getDownloadURL(storageRef);
+        const res = await fetch(`https://api.cloudinary.com/v1_1/dbbuf9yww/image/upload`, {
+          method: "POST",
+          body: formData
+        });
 
-        // Dodaj proizvod u Firestore
-      await addDoc(collection(db, "products"), { naziv, opis, cena, slikaUrl, filteri });
+        const data = await res.json();
+        const slikaURL = data.secure_url;
+
+        // 🔹 Dodaj proizvod u Firestore
+    // 🔹 Dodaj proizvod u Firestore
+await addDoc(collection(db, "products"), {
+  title: title,
+  desc: desc,
+  price: parseInt(price),
+  category: category,
+  img: slikaURL,
+  createdAt: new Date()
+});
 
 
         msg.textContent = "Proizvod uspešno dodat ✅";
@@ -174,6 +192,6 @@
       await signOut(auth);
     });
   </script>
-
 </body>
 </html>
+
